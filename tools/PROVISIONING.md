@@ -1,16 +1,39 @@
-# Local private build provisioning
+# Cấu hình kết nối riêng cho build
 
-No production credentials belong in public headers, review documents or fixtures.
-Existing credentials were migrated unchanged to `private/provisioning.json` (directory 0700, file 0600), excluded by `.gitignore`. This is a local build input, not a new Cloud provisioning service. No credential rotation, NVS erase, eFuse, secure boot or encryption changes occurred.
+[← Mục lục tài liệu](../docs/README.md) · [Hướng dẫn build và cấu hình đầy đủ](../docs/guides/getting-started.md)
 
-For a new development checkout, copy `tools/provisioning.example.json` to that private location, fill it locally, then restrict its permissions. Do not paste values into shell command arguments, source control, CI logs or reports. A missing/empty private configuration still builds, with network disabled and local monitoring/latch enabled. Invalid types/lengths fail configuration without printing secrets.
+Cấu hình Wi-Fi và token thuộc từng thiết bị được giữ trong `private/provisioning.json`, không đưa vào source, fixtures hoặc tài liệu public. Đây là đầu vào build cục bộ, không phải dịch vụ cấp phát cấu hình từ Cloud.
 
-```sh
-source /home/cuongdso/esp/esp-idf/export.sh
-idf.py -DPCCC_PRIVATE_CONFIG=/home/cuongdso/iot/khu_dun_nau/private/provisioning.json build
+## Tạo cấu hình
+
+Chạy tại thư mục gốc dự án, với file chưa tồn tại:
+
+```bash
+mkdir -p private
+chmod 700 private
+cp tools/provisioning.example.json private/provisioning.json
+chmod 600 private/provisioning.json
+```
+
+Điền `wifi_ssid`, `wifi_password`, `tb_access_token` bằng trình soạn thảo cục bộ. Không in giá trị trong shell arguments, CI logs hoặc issue. Không copy đè file đã provision.
+
+Sau khi kích hoạt ESP-IDF:
+
+```bash
+idf.py build
 python3 tools/release_check.py
 ```
 
-CMake generates a mode-0600 header under `build/esp-idf/main/private/`. Firmware uses Wi-Fi RAM storage; the previous NVS Wi-Fi values are deliberately not erased. The firmware binary/ELF and original baseline backup also contain device credentials and must remain private. This protects the public source/release documentation, not physical extraction from unencrypted firmware. Do not publish device-specific build artifacts. The implementation set the local build directory to 0700 and app binary/ELF to 0600; preserve private permissions in CI/artifact storage. Rotation/revocation can be scheduled after a separately validated migration.
+CMake mặc định đọc `private/provisioning.json`. Dùng `-DPCCC_PRIVATE_CONFIG=/duong/dan/tuyet/doi/provisioning.json` nếu cần file khác; đường dẫn được CMake cache. File thiếu/rỗng hoặc chưa đủ trường vẫn build với mạng tắt và local safety bật. Sai kiểu, quá dài hoặc chứa NUL làm configuration thất bại mà không in giá trị.
 
-TLS uses the bundled root CA, default hostname checks, and enabled certificate date checks. A sane actual SNTP synchronization must occur before MQTT connects; no bypass exists for unsynchronized time. Standard unauthenticated SNTP is still a bootstrap trust limitation: build-time bounds, sync-age and jump checks do not turn it into authenticated time. A failed network/clock/bootstrap leaves local monitoring running. No Cloud command subscriptions exist.
+## Header và artifact
+
+CMake sinh `build/esp-idf/main/private/pccc_build_config.h` ở mode 0600. Giữ file JSON mode 0600, thư mục riêng mode 0700 và giới hạn quyền truy cập build/artifact storage. Wi-Fi dùng RAM storage; firmware không tự xóa các giá trị NVS cũ.
+
+Firmware binary/ELF đã provision chứa thông tin kết nối; không phát hành chúng lên GitHub hoặc CI artifacts public. `.gitignore` giữ private/build/key/log ngoài Git, không ngăn trích xuất credential từ thiết bị có firmware không mã hóa. Release checker chỉ so khớp credential hiện tại trong các nhóm tệp nó duyệt, không thay rà soát bí mật toàn diện.
+
+## TLS và điều khiển
+
+Firmware dùng CA nhúng, kiểm tra hostname và ngày chứng chỉ; MQTT cần đồng bộ SNTP thực trước khi kết nối. Không có bypass cho clock chưa trusted. SNTP không được xác thực mật mã; network/clock bootstrap lỗi thì local safety tiếp tục độc lập. Không có Cloud command subscription, remote ACK hoặc remote threshold control trong triển khai này.
+
+Nguồn: [generator](generate_build_config.py), [CMake](../main/CMakeLists.txt), [ThingsBoard](../docs/guides/thingsboard.md).

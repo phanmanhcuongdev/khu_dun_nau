@@ -1,5 +1,9 @@
 # WP01 — Safety state / Physical ACK / Durable emergency latch
 
+[← Mục lục tài liệu](../README.md) · Chuẩn hóa tài liệu: **2026-11-12**.
+
+**Trạng thái: báo cáo triển khai lịch sử.** Kết quả build/flash/test bên dưới được ghi tại thời điểm thực hiện; không tự áp dụng cho mọi checkout sau này. Log, manifests, patches và thư mục evidence được giữ cục bộ, không phát hành trong repository public. Các mô tả “chưa có Git” phản ánh lúc viết báo cáo.
+
 Ngày: 2026-11-11. Phạm vi chỉ WP01; D1–D4 đã duyệt. Không triển khai event journal, MQTT schema, publisher budgets hoặc Cloud. Không đổi GPIO, PSRAM, thresholds, credentials, OLED UI hay RGB.
 
 ## A. Changed files và baseline

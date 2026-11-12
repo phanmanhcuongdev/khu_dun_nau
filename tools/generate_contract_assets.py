@@ -2,7 +2,7 @@
 """Generate published schema/dictionary from reviewed V1 types, not device secrets."""
 import json,re,pathlib
 root=pathlib.Path(__file__).resolve().parents[1]
-text=(root/'docs/reviews/thingsboard_data_model_proposal.md').read_text()
+text=(root/'docs/reviews/thingsboard-data-model-proposal.md').read_text()
 old=next(json.loads(b) for b in re.findall(r'```json\n(.*?)\n```',text,re.S) if '"$schema"' in b)
 props=old['$defs']['values']['properties'];props=json.loads(json.dumps(props))
 for p in props.values():

@@ -1,6 +1,10 @@
 # PCCC V1 — Cloud integration acceptance checklist
 
-Đồng hành với [MQTT handoff](/home/cuongdso/iot/khu_dun_nau/docs/thingsboard/PCCC_V1_MQTT_DATA_CONTRACT_HANDOFF.md), CSV dictionary và JSON examples. Firmware1.1.0-phase1 / schema1. Mọi setup/test live dưới đây là **RECOMMENDED — NOT IMPLEMENTED / NOT VERIFIED** trong repository; ô trống không là PASS. Chỉ thực hiện với tài khoản/tenant/device test được phép. Không dùng device token để suy quyền admin, không publish fixtures vào production, không kích thích lửa/khói thật.
+[← Mục lục tài liệu](../README.md) · Chuẩn hóa tài liệu: **2026-11-12**.
+
+**Trạng thái: tham chiếu contract firmware V1.** Đọc [hướng dẫn tích hợp](../guides/thingsboard.md) trước; các bước live Cloud chưa đánh dấu hoàn thành phải được nghiệm thu riêng trên tenant được cấp quyền.
+
+Đồng hành với [MQTT handoff](mqtt-data-contract.md), CSV dictionary và JSON examples. Firmware1.1.0-phase1 / schema1. Mọi setup/test live dưới đây là **RECOMMENDED — NOT IMPLEMENTED / NOT VERIFIED** trong repository; ô trống không là PASS. Chỉ thực hiện với tài khoản/tenant/device test được phép. Không dùng device token để suy quyền admin, không publish fixtures vào production, không kích thích lửa/khói thật.
 
 ## 1. Chuẩn bị dữ liệu và quyền
 

@@ -1,5 +1,9 @@
 # PCCC V1 — Production readiness review
 
+[← Mục lục tài liệu](../README.md) · Chuẩn hóa tài liệu: **2026-11-12**.
+
+**Trạng thái: tài liệu lịch sử — audit/đề xuất trước triển khai.** Những nhận định “hiện tại” bên dưới thuộc baseline lúc review; đọc [hướng dẫn hiện hành](../guides/architecture.md) và báo cáo Phase 1 để biết phần đã thay đổi.
+
 Ngày review: 2026-11-11 (Asia/Ho_Chi_Minh). Phạm vi: nguyên mẫu nghiên cứu ESP32-S3 N16R8, ESP-IDF 6.1, không đánh giá chứng nhận PCCC thương mại. **Chỉ review; không sửa firmware/config, không build/flash hay thay đổi Cloud trong vòng này.**
 
 ## Executive summary và verdict
@@ -14,7 +18,7 @@ P0 dưới đây nghĩa là blocker của **hành vi lõi được thiết kế*
 - Không có Git metadata (`git status` thất bại); không tạo repository. SHA256 source/config/tests trước và sau vòng review được đối chiếu; chỉ ba báo cáo trong thư mục này là đầu ra chủ đích.
 - Đã chạy lại OLED ASan/UBSan, RGB host và bốn cấu hình LD2410: PASS. LeakSanitizer bị tắt theo test script do môi trường ptrace; không gọi đó là kiểm tra memory leak.
 - Có thêm probe chỉ trong `/tmp/pccc-review-probes`, link source thật của Risk Engine/Local Alarm và event buffer; kết quả ở phần tái hiện. Đây là mô phỏng host, không phải HIL hay kiểm thử điện.
-- Build/flash PASS trước vòng review có bằng chứng `OLED_UI_V2.md`, `validation/oled_v2_boot_summary.log:1`, `validation/rgb_production_boot_summary.log:1`. Không chạy build mới để tránh tái sinh config/build artifacts. OLED optical chưa được xác nhận; người dùng đã xác nhận RGB đúng màu khi chủ động test.
+- Build/flash PASS trước vòng review có bằng chứng `docs/reference/oled-ui-v2.md`, `validation/oled_v2_boot_summary.log:1`, `validation/rgb_production_boot_summary.log:1`. Không chạy build mới để tránh tái sinh config/build artifacts. OLED optical chưa được xác nhận; người dùng đã xác nhận RGB đúng màu khi chủ động test.
 - Cloud tenant, Rule Chain, quota, dashboard, broker reverse proxy/bridge không được truy cập: **UNKNOWN/NOT VERIFIED**. URI trong source là domain tùy chỉnh, không chứng minh tự nó là ThingsBoard Cloud trực tiếp.
 
 ## Kiến trúc hiện tại
@@ -151,8 +155,8 @@ Không đóng băng bản hiện tại. Minimum: sửa R01, R02/R03/R07; quyết
 ## Tài liệu chính thức đối chiếu
 
 - [ESP-IDF 6.1 watchdogs](https://docs.espressif.com/projects/esp-idf/en/release-v6.1/esp32s3/api-reference/system/wdts.html): idle starvation và task/user progress monitoring khác nhau; app cần đăng ký đúng đối tượng để kiểm tra deadline.
-- ThingsBoard API/alarm sources và payload examples trong [data model proposal](thingsboard_data_model_proposal.md).
-- Kế hoạch có dependencies/acceptance trong [implementation plan](production_implementation_plan.md).
+- ThingsBoard API/alarm sources và payload examples trong [data model proposal](thingsboard-data-model-proposal.md).
+- Kế hoạch có dependencies/acceptance trong [implementation plan](production-implementation-plan.md).
 
 Bổ sung nguồn integrity: [Melexis MLX90614 SMBus application note](https://media.melexis.com/-/media/files/documents/application-notes/mlx90614-smbus-communication-application-note-melexis.pdf?sc_lang=zh) mô tả PEC CRC-8 bao phủ address/command/data; driver hiện bỏ byte thứ ba nên không thực hiện kiểm tra này. Dependency lock hiện pin IDF6.1.0, MQTT1.1.0, cJSON1.7.19~2 và SSD1306 commit; manifest wildcard không đồng nghĩa build hiện tại chưa có lock.
 

@@ -1,5 +1,9 @@
 # LD2410C UART echo / ACK investigation — 2026-11-09
 
+[← Mục lục tài liệu](../README.md) · Chuẩn hóa tài liệu: **2026-11-12**.
+
+**Trạng thái: tham chiếu kỹ thuật theo phiên kiểm tra.** Pinout và hành vi hiện tại được tóm tắt trong [phần cứng](../guides/hardware.md) và [vận hành](../guides/operation.md). Các log/binary/đường dẫn máy cá nhân bên dưới là provenance cục bộ, không nằm trong bộ tài liệu public.
+
 ## A. Observed TX/RX evidence
 
 **RAW_RX_CAPTURE_NOT_AVAILABLE**. The old monitor log has TX hex, but no raw RX
@@ -188,7 +192,7 @@ Actual commands:
 
 ```sh
 tests/ld2410/run.sh
-source /home/cuongdso/esp/esp-idf/export.sh
+source /duong/dan/esp-idf/export.sh
 idf.py build
 ```
 

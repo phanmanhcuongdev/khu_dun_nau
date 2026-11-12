@@ -1,6 +1,10 @@
 # PCCC V1 — Recommended implementation plan
 
-Ngày: 2026-11-11. **Kế hoạch đề xuất, chưa được triển khai.** Dựa trên [audit/risk register R01–R18](production_readiness_review.md) và [ThingsBoard contract](thingsboard_data_model_proposal.md). Không thay ngưỡng phát hiện, không thêm remote ACK, không triển khai OTA/PSRAM như điều kiện mặc định.
+[← Mục lục tài liệu](../README.md) · Chuẩn hóa tài liệu: **2026-11-12**.
+
+**Trạng thái: tài liệu lịch sử — audit/đề xuất trước triển khai.** Những nhận định “hiện tại” bên dưới thuộc baseline lúc review; đọc [hướng dẫn hiện hành](../guides/architecture.md) và báo cáo Phase 1 để biết phần đã thay đổi.
+
+Ngày: 2026-11-11. **Kế hoạch đề xuất, chưa được triển khai.** Dựa trên [audit/risk register R01–R18](production-readiness-review.md) và [ThingsBoard contract](thingsboard-data-model-proposal.md). Không thay ngưỡng phát hiện, không thêm remote ACK, không triển khai OTA/PSRAM như điều kiện mặc định.
 
 ## 1. Quyết định thực sự cần trước triển khai
 

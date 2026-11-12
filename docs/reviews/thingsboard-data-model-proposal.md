@@ -1,6 +1,10 @@
 # PCCC V1 — ThingsBoard data model proposal
 
-Ngày: 2026-11-11. **PROPOSAL ONLY**: không sửa serializer, device profile, Rule Chain, dashboard, credential hoặc dữ liệu Cloud. Đồng hành với [audit](production_readiness_review.md). Các source citations là đường dẫn tương đối từ repository.
+[← Mục lục tài liệu](../README.md) · Chuẩn hóa tài liệu: **2026-11-12**.
+
+**Trạng thái: tài liệu lịch sử — audit/đề xuất trước triển khai.** Những nhận định “hiện tại” bên dưới thuộc baseline lúc review; đọc [hướng dẫn hiện hành](../guides/architecture.md) và báo cáo Phase 1 để biết phần đã thay đổi.
+
+Ngày: 2026-11-11. **PROPOSAL ONLY**: không sửa serializer, device profile, Rule Chain, dashboard, credential hoặc dữ liệu Cloud. Đồng hành với [audit](production-readiness-review.md). Các source citations là đường dẫn tương đối từ repository.
 
 ## 1. Current MQTT audit — hiện tại, không phải schema đề xuất
 

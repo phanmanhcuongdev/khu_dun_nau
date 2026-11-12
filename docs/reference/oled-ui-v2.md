@@ -1,5 +1,9 @@
 # OLED UI V2
 
+[← Mục lục tài liệu](../README.md) · Chuẩn hóa tài liệu: **2026-11-12**.
+
+**Trạng thái: tham chiếu kỹ thuật theo phiên kiểm tra.** Pinout và hành vi hiện tại được tóm tắt trong [phần cứng](../guides/hardware.md) và [vận hành](../guides/operation.md). Các log/binary/đường dẫn máy cá nhân bên dưới là provenance cục bộ, không nằm trong bộ tài liệu public.
+
 Presentation only. SSD1306 128x64 0x3C, SDA21/SCL47 unchanged.
 Snapshot -> pure oled_ui_compose -> oled_ui_render -> changed-page SSD1306 writes.
 Existing 8x8 font reused: title stretched vertically 2x, temperature scaled 2x2.

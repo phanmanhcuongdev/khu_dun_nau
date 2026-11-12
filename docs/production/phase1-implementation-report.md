@@ -1,6 +1,10 @@
 # PCCC V1 — Production Phase 1 implementation
 
-Ngày: 2026-11-11. Baseline: ba review trong `docs/reviews/` và `WP01_implementation_report.md`; D1–D4 giữ nguyên. Phạm vi firmware WP02, WP03, WP04 và WP06. Không thực hiện WP05/dashboard, Cloud migration hoặc thay đổi safety thresholds.
+[← Mục lục tài liệu](../README.md) · Chuẩn hóa tài liệu: **2026-11-12**.
+
+**Trạng thái: báo cáo triển khai lịch sử.** Kết quả build/flash/test bên dưới được ghi tại thời điểm thực hiện; không tự áp dụng cho mọi checkout sau này. Log, manifests, patches và thư mục evidence được giữ cục bộ, không phát hành trong repository public. Các mô tả “chưa có Git” phản ánh lúc viết báo cáo.
+
+Ngày: 2026-11-11. Baseline: ba review trong `docs/reviews/` và `wp01-implementation-report.md`; D1–D4 giữ nguyên. Phạm vi firmware WP02, WP03, WP04 và WP06. Không thực hiện WP05/dashboard, Cloud migration hoặc thay đổi safety thresholds.
 
 ## 1. Kết quả và phạm vi nghiệm thu
 

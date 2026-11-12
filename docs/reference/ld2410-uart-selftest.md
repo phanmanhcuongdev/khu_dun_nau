@@ -1,8 +1,12 @@
 # LD2410C UART self-test — Linux implementation and validation
 
+[← Mục lục tài liệu](../README.md) · Chuẩn hóa tài liệu: **2026-11-12**.
+
+**Trạng thái: tham chiếu kỹ thuật theo phiên kiểm tra.** Pinout và hành vi hiện tại được tóm tắt trong [phần cứng](../guides/hardware.md) và [vận hành](../guides/operation.md). Các log/binary/đường dẫn máy cá nhân bên dưới là provenance cục bộ, không nằm trong bộ tài liệu public.
+
 Historical implementation report. For the subsequent hardware evidence, parser
 classification fixes and current diagnostic build, see
-[LD2410_UART_INVESTIGATION.md](LD2410_UART_INVESTIGATION.md).
+[docs/reference/ld2410-uart-investigation.md](ld2410-uart-investigation.md).
 
 ## A. Source baseline
 
@@ -148,7 +152,7 @@ Actual commands from the project root:
 
 ```sh
 tests/ld2410/run.sh
-source /home/cuongdso/esp/esp-idf/export.sh
+source /duong/dan/esp-idf/export.sh
 idf.py build
 ```
 

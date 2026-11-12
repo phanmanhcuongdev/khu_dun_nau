@@ -1,5 +1,9 @@
 # PCCC V1 — MQTT Data Contract Handoff
 
+[← Mục lục tài liệu](../README.md) · Chuẩn hóa tài liệu: **2026-11-12**.
+
+**Trạng thái: tham chiếu contract firmware V1.** Đọc [hướng dẫn tích hợp](../guides/thingsboard.md) trước; các bước live Cloud chưa đánh dấu hoàn thành phải được nghiệm thu riêng trên tenant được cấp quyền.
+
 Ngày bàn giao: **2026-11-11**. Firmware **1.1.0-phase1**; `schema_version=1`; ESP-IDF6.1 / ESP32-S3 N16R8. Đây là tài liệu mô hình dữ liệu **IMPLEMENTED** ở source hiện tại, không sửa firmware hoặc Cloud.
 
 Bản build/flash có bằng chứng gần nhất: build_id `4dba43409b298ef3`, config_id `0e26394ea6944ef8`; các giá trị này là fingerprints của bản đã báo cáo, không hardcode để nhận diện mọi release sau. Device identity phía ThingsBoard lấy từ authenticated originator, không từ boot_id, MQTT client ID hoặc nhãn zone.
@@ -8,9 +12,9 @@ Bản build/flash có bằng chứng gần nhất: build_id `4dba43409b298ef3`, 
 
 Các file đồng hành:
 
-- [Telemetry dictionary CSV — UTF-8, comma-separated,93 data rows](/home/cuongdso/iot/khu_dun_nau/docs/thingsboard/PCCC_V1_TELEMETRY_DICTIONARY.csv).
-- [Payload examples JSON —16 cases và provenance](/home/cuongdso/iot/khu_dun_nau/docs/thingsboard/PCCC_V1_PAYLOAD_EXAMPLES.json).
-- [Cloud integration acceptance checklist](/home/cuongdso/iot/khu_dun_nau/docs/thingsboard/PCCC_V1_CLOUD_INTEGRATION_CHECKLIST.md).
+- [Telemetry dictionary CSV — UTF-8, comma-separated,93 data rows](PCCC_V1_TELEMETRY_DICTIONARY.csv).
+- [Payload examples JSON —16 cases và provenance](PCCC_V1_PAYLOAD_EXAMPLES.json).
+- [Cloud integration acceptance checklist](cloud-integration-checklist.md).
 
 ## Mục lục
 
@@ -865,7 +869,7 @@ Không kỳ vọng node_id, timestamp, seq, T_object, MQ2_raw, mq2_do, flame_raw
 <a id="s13"></a>
 ## 13. Integration & acceptance checklist
 
-Xem file đồng hành [PCCC_V1_CLOUD_INTEGRATION_CHECKLIST.md](/home/cuongdso/iot/khu_dun_nau/docs/thingsboard/PCCC_V1_CLOUD_INTEGRATION_CHECKLIST.md). Đây là các bước cho thành viên ThingsBoard thực hiện trên môi trường/tenant được phép; trạng thái live tests **NOT VERIFIED**, không được hiểu là tác vụ này đã chạy chúng. Checklist không yêu cầu đọc source, không cần thay firmware hoặc tạo lửa/khói thật.
+Xem file đồng hành [cloud-integration-checklist.md](cloud-integration-checklist.md). Đây là các bước cho thành viên ThingsBoard thực hiện trên môi trường/tenant được phép; trạng thái live tests **NOT VERIFIED**, không được hiểu là tác vụ này đã chạy chúng. Checklist không yêu cầu đọc source, không cần thay firmware hoặc tạo lửa/khói thật.
 
 
 <a id="s14"></a>
@@ -900,39 +904,39 @@ Giới hạn kiểm chứng: actual tenant ingest/DB/Rule Chain/alarm/dashboard 
 
 Mọi semantics để người nhận sử dụng đã có trong tài liệu/bảng CSV; references để traceability, không bắt buộc người triển khai mở source. Source hiện tại ưu tiên hơn proposal/review cũ.
 
-- [main/src/cloud_codec.c:31](/home/cuongdso/iot/khu_dun_nau/main/src/cloud_codec.c:31)
-- [main/src/cloud_codec.c:42](/home/cuongdso/iot/khu_dun_nau/main/src/cloud_codec.c:42)
-- [main/src/cloud_codec.c:74](/home/cuongdso/iot/khu_dun_nau/main/src/cloud_codec.c:74)
-- [main/src/cloud_codec.c:82](/home/cuongdso/iot/khu_dun_nau/main/src/cloud_codec.c:82)
-- [main/src/tb_mqtt.c:23](/home/cuongdso/iot/khu_dun_nau/main/src/tb_mqtt.c:23)
-- [main/src/tb_mqtt.c:74](/home/cuongdso/iot/khu_dun_nau/main/src/tb_mqtt.c:74)
-- [main/src/tb_mqtt.c:118](/home/cuongdso/iot/khu_dun_nau/main/src/tb_mqtt.c:118)
-- [main/include/tb_mqtt.h:3](/home/cuongdso/iot/khu_dun_nau/main/include/tb_mqtt.h:3)
-- [main/include/publish_policy.h:5](/home/cuongdso/iot/khu_dun_nau/main/include/publish_policy.h:5)
-- [main/include/clock_policy.h:4](/home/cuongdso/iot/khu_dun_nau/main/include/clock_policy.h:4)
-- [main/src/event_buffer.c:10](/home/cuongdso/iot/khu_dun_nau/main/src/event_buffer.c:10)
-- [main/src/mqtt_delivery.c:10](/home/cuongdso/iot/khu_dun_nau/main/src/mqtt_delivery.c:10)
-- [main/src/critical_journal.c:31](/home/cuongdso/iot/khu_dun_nau/main/src/critical_journal.c:31)
-- [main/include/sensor_types.h:31](/home/cuongdso/iot/khu_dun_nau/main/include/sensor_types.h:31)
-- [main/src/risk_engine.c:55](/home/cuongdso/iot/khu_dun_nau/main/src/risk_engine.c:55)
-- [main/src/risk_engine.c:174](/home/cuongdso/iot/khu_dun_nau/main/src/risk_engine.c:174)
-- [main/include/latch_store.h:5](/home/cuongdso/iot/khu_dun_nau/main/include/latch_store.h:5)
-- [main/src/sensor_pipeline.c:402](/home/cuongdso/iot/khu_dun_nau/main/src/sensor_pipeline.c:402)
-- [main/include/sensor_pipeline.h:19](/home/cuongdso/iot/khu_dun_nau/main/include/sensor_pipeline.h:19)
-- [managed_components/espressif__mqtt/mqtt_client.c:596](/home/cuongdso/iot/khu_dun_nau/managed_components/espressif__mqtt/mqtt_client.c:596)
-- [managed_components/espressif__mqtt/mqtt_client.c:228](/home/cuongdso/iot/khu_dun_nau/managed_components/espressif__mqtt/mqtt_client.c:228)
-- [sdkconfig:3860](/home/cuongdso/iot/khu_dun_nau/sdkconfig:3860)
-- [sdkconfig:3159](/home/cuongdso/iot/khu_dun_nau/sdkconfig:3159)
-- [tools/generate_build_config.py:20](/home/cuongdso/iot/khu_dun_nau/tools/generate_build_config.py:20)
-- [docs/production/PHASE1_IMPLEMENTATION_REPORT.md:118](/home/cuongdso/iot/khu_dun_nau/docs/production/PHASE1_IMPLEMENTATION_REPORT.md:118)
-- [docs/production/evidence/phase1/boot_final.log:139](/home/cuongdso/iot/khu_dun_nau/docs/production/evidence/phase1/boot_final.log:139)
-- [schemas/pccc-v1/telemetry.schema.json:2](/home/cuongdso/iot/khu_dun_nau/schemas/pccc-v1/telemetry.schema.json:2)
-- [schemas/pccc-v1/data_dictionary.json:2](/home/cuongdso/iot/khu_dun_nau/schemas/pccc-v1/data_dictionary.json:2)
-- [schemas/pccc-v1/attributes_dictionary.json:50](/home/cuongdso/iot/khu_dun_nau/schemas/pccc-v1/attributes_dictionary.json:50)
-- [docs/reviews/thingsboard_data_model_proposal.md:1](/home/cuongdso/iot/khu_dun_nau/docs/reviews/thingsboard_data_model_proposal.md:1)
-- [docs/reviews/production_readiness_review.md:1](/home/cuongdso/iot/khu_dun_nau/docs/reviews/production_readiness_review.md:1)
-- [docs/reviews/production_implementation_plan.md:1](/home/cuongdso/iot/khu_dun_nau/docs/reviews/production_implementation_plan.md:1)
-- [migration/phase2/normalize.py:4](/home/cuongdso/iot/khu_dun_nau/migration/phase2/normalize.py:4)
+- [main/src/cloud_codec.c:31](../../main/src/cloud_codec.c#L31)
+- [main/src/cloud_codec.c:42](../../main/src/cloud_codec.c#L42)
+- [main/src/cloud_codec.c:74](../../main/src/cloud_codec.c#L74)
+- [main/src/cloud_codec.c:82](../../main/src/cloud_codec.c#L82)
+- [main/src/tb_mqtt.c:23](../../main/src/tb_mqtt.c#L23)
+- [main/src/tb_mqtt.c:74](../../main/src/tb_mqtt.c#L74)
+- [main/src/tb_mqtt.c:118](../../main/src/tb_mqtt.c#L118)
+- [main/include/tb_mqtt.h:3](../../main/include/tb_mqtt.h#L3)
+- [main/include/publish_policy.h:5](../../main/include/publish_policy.h#L5)
+- [main/include/clock_policy.h:4](../../main/include/clock_policy.h#L4)
+- [main/src/event_buffer.c:10](../../main/src/event_buffer.c#L10)
+- [main/src/mqtt_delivery.c:10](../../main/src/mqtt_delivery.c#L10)
+- [main/src/critical_journal.c:31](../../main/src/critical_journal.c#L31)
+- [main/include/sensor_types.h:31](../../main/include/sensor_types.h#L31)
+- [main/src/risk_engine.c:55](../../main/src/risk_engine.c#L55)
+- [main/src/risk_engine.c:174](../../main/src/risk_engine.c#L174)
+- [main/include/latch_store.h:5](../../main/include/latch_store.h#L5)
+- [main/src/sensor_pipeline.c:402](../../main/src/sensor_pipeline.c#L402)
+- [main/include/sensor_pipeline.h:19](../../main/include/sensor_pipeline.h#L19)
+- `managed_components/espressif__mqtt/mqtt_client.c:596` (tham chiếu cục bộ, không phát hành public)
+- `managed_components/espressif__mqtt/mqtt_client.c:228` (tham chiếu cục bộ, không phát hành public)
+- [sdkconfig:3860](../../sdkconfig#L3860)
+- [sdkconfig:3159](../../sdkconfig#L3159)
+- [tools/generate_build_config.py:20](../../tools/generate_build_config.py#L20)
+- [docs/production/phase1-implementation-report.md:118](../production/phase1-implementation-report.md#L118)
+- `docs/production/evidence/phase1/boot_final.log:139` (tham chiếu cục bộ, không phát hành public)
+- [schemas/pccc-v1/telemetry.schema.json:2](../../schemas/pccc-v1/telemetry.schema.json#L2)
+- [schemas/pccc-v1/data_dictionary.json:2](../../schemas/pccc-v1/data_dictionary.json#L2)
+- [schemas/pccc-v1/attributes_dictionary.json:50](../../schemas/pccc-v1/attributes_dictionary.json#L50)
+- [docs/reviews/thingsboard-data-model-proposal.md:1](../reviews/thingsboard-data-model-proposal.md#L1)
+- [docs/reviews/production-readiness-review.md:1](../reviews/production-readiness-review.md#L1)
+- [docs/reviews/production-implementation-plan.md:1](../reviews/production-implementation-plan.md#L1)
+- [migration/phase2/normalize.py:4](../../migration/phase2/normalize.py#L4)
 
 Validation documentation: đối chiếu extracted literal keys của begin/cloud_encode/cloud_health/cloud_attributes với CSV và schema; enum đối chiếu source; JSON16 entries parse/validate bằng Draft2020-12, optional validity checks và provenance transformation checks; Markdown JSON blocks/type/unit/link references được kiểm tra; scan credentials không xuất giá trị; so before/after hashes để chỉ docs/thingsboard được thêm. Kết quả cụ thể ở cuối checklist. Không chạy lại host binaries/build/flash hoặc fault injection. Evidence TESTED firmware nêu ở trên lấy từ báo cáo/log Phase1 hiện có, không nhận là mới test trong tác vụ này.
 

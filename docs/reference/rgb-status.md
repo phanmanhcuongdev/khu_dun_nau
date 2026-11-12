@@ -1,5 +1,9 @@
 # RGB status integration
 
+[← Mục lục tài liệu](../README.md) · Chuẩn hóa tài liệu: **2026-11-12**.
+
+**Trạng thái: tham chiếu kỹ thuật theo phiên kiểm tra.** Pinout và hành vi hiện tại được tóm tắt trong [phần cứng](../guides/hardware.md) và [vận hành](../guides/operation.md). Các log/binary/đường dẫn máy cá nhân bên dưới là provenance cục bộ, không nằm trong bộ tài liệu public.
+
 Kconfig production defaults remain disabled; current hardware test sdkconfig enables
 CONFIG_RGB_STATUS_WIRING_CONFIRMED=y; production self-test is disabled.
 No GPIO is configured by RGB until explicitly enabled. Do not enable with original wiring.
@@ -58,7 +62,7 @@ No device was flashed and no optical/electrical/servo test was performed.
 ## Validation commands
 python3 tests/rgb_status/run.py
 bash tests/ld2410/run.sh
-source /home/cuongdso/esp/esp-idf/export.sh
+source /duong/dan/esp-idf/export.sh
 idf.py build
 
 Only AFTER safety confirmation, rewiring, enabling the Kconfig option and rebuilding:
