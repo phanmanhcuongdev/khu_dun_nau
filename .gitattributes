@@ -12,3 +12,4 @@ CMakeLists.txt text eol=lf
 *.pem text eol=lf
 *.png binary
 *.pbm binary
+*.fzz binary

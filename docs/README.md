@@ -20,6 +20,7 @@ Cập nhật: **2026-11-12**. Bộ hướng dẫn này mô tả mã nguồn đan
 | MQTT V1 | [Contract handoff](thingsboard/mqtt-data-contract.md) | Chi tiết keys, enum, timestamp, ordering, dashboard và giới hạn |
 | Nghiệm thu Cloud | [Checklist](thingsboard/cloud-integration-checklist.md) | Công việc cần thực hiện trên tenant được cấp quyền |
 | Dữ liệu Cloud | [CSV dictionary](thingsboard/PCCC_V1_TELEMETRY_DICTIONARY.csv), [JSON examples](thingsboard/PCCC_V1_PAYLOAD_EXAMPLES.json) | Artifact có cấu trúc; giữ tên để tương thích tài liệu/công cụ |
+| Sơ đồ phần cứng | [PNG breadboard](hardware/so_do_khu_dun_nau_bb.png), [thiết kế Fritzing](hardware/so_do_khu_dun_nau.fzz) | Bản thiết kế được cung cấp, xem cùng bảng GPIO |
 | Schema | [Contract và dictionary](../schemas/pccc-v1/README.md), [telemetry](../schemas/pccc-v1/telemetry.schema.json), [attributes](../schemas/pccc-v1/attributes.schema.json) | Kiểm tra cấu trúc payload bằng máy |
 | Routing | [Phase 2 handoff](../migration/phase2/README.md) | Tham chiếu dry-run, chưa là cấu hình tenant production |
 | OLED | [UI V2](reference/oled-ui-v2.md) | Bố cục, ưu tiên hiển thị và giới hạn màn hình |

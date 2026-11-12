@@ -46,6 +46,12 @@ idf.py -p /dev/ttyACM0 flash monitor
 
 Thay cổng nối tiếp theo máy của bạn; thoát monitor bằng `Ctrl+]`. Xem [hướng dẫn build và cấu hình](docs/guides/getting-started.md) trước lần flash đầu.
 
+## Sơ đồ phần cứng
+
+[Ảnh sơ đồ breadboard](docs/hardware/so_do_khu_dun_nau_bb.png) · [File thiết kế Fritzing (.fzz)](docs/hardware/so_do_khu_dun_nau.fzz)
+
+Xem ảnh và bảng GPIO tại [hướng dẫn phần cứng](docs/guides/hardware.md).
+
 ## Luồng xử lý
 
 ```mermaid

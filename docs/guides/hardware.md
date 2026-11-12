@@ -2,6 +2,15 @@
 
 [← Mục lục](../README.md) · Phạm vi: cấu hình chân hiện tại trong firmware ESP32-S3.
 
+## Sơ đồ Fritzing
+
+- [Mở/tải ảnh breadboard PNG](../hardware/so_do_khu_dun_nau_bb.png).
+- [Tải file thiết kế Fritzing (.fzz)](../hardware/so_do_khu_dun_nau.fzz) để mở và chỉnh sửa trong Fritzing.
+
+Hai tệp được giữ nguyên từ bản thiết kế được cung cấp. Đối chiếu sơ đồ với bảng chân firmware bên dưới trước khi đấu nối.
+
+![Sơ đồ breadboard khu vực đun nấu](../hardware/so_do_khu_dun_nau_bb.png)
+
 ## Board và thiết bị
 
 Board tham chiếu là ESP32-S3 N16R8. Danh sách bên dưới mô tả tín hiệu firmware sử dụng; điện áp cấp nguồn và mạch chuyển mức cần đối chiếu đúng phiên bản module thực tế. Không suy điện áp an toàn của chân ESP32 từ điện áp cấp module; giữ chung GND và kiểm tra mạch chia áp/chuyển mức cho tín hiệu vượt miền điện áp của MCU, đặc biệt AO của module MQ-2/flame.
