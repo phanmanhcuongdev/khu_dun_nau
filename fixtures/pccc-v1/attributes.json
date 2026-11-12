@@ -1,0 +1,1 @@
+{"reset_reason":"POWERON","schema_version":1,"firmware_version":"fixture-1.1.0","build_id":"fixture-build","config_id":"fixture-config","hardware_model":"ESP32-S3 N16R8","zone_id":"V1","capabilities":"mlx90614,mq2_do,mq2_ao,flame_do,flame_ao,ld2410,physical_ack,buzzer,rgb,oled,read_only_cloud","recommended_inactivity_ms":90000}

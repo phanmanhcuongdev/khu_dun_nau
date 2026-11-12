@@ -1,0 +1,25 @@
+menu "RGB status"
+config RGB_STATUS_WIRING_CONFIRMED
+    bool "Enable RGB after board pinout and rewiring verification"
+    default n
+    help
+        Confirm physical R39/G38/B48 wiring, no external JTAG on GPIO39,
+        and board RGB LED/peripheral connections on GPIO38/48 are verified.
+config RGB_STATUS_R_GPIO
+    int "Red GPIO"
+    default 39
+config RGB_STATUS_G_GPIO
+    int "Green GPIO"
+    default 38
+config RGB_STATUS_B_GPIO
+    int "Blue GPIO"
+    default 48
+config RGB_STATUS_SELF_TEST
+    bool "Run once LED-only self-test after monitoring starts"
+    depends on RGB_STATUS_WIRING_CONFIRMED
+    default n
+    help
+        Displays five patterns for 5 seconds each. Real WARNING, FIRE or
+        SENSOR_ERROR cancels the test permanently until reboot. Does not
+        simulate risk or change buzzer, telemetry or sensor processing.
+endmenu

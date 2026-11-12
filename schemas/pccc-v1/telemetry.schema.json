@@ -1,0 +1,650 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:pccc:v1:telemetry",
+  "$defs": {
+    "record": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "schema_version": {
+              "const": 1
+            },
+            "boot_id": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            },
+            "record_seq": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "record_kind": {
+              "enum": [
+                "SNAPSHOT",
+                "BOOT",
+                "RECONNECT",
+                "HEARTBEAT"
+              ]
+            },
+            "replayed": {
+              "type": "boolean"
+            },
+            "time_synced": {
+              "type": "boolean"
+            },
+            "captured_uptime_ms": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "risk_level": {
+              "enum": [
+                "UNKNOWN",
+                "NORMAL",
+                "SUSPICIOUS",
+                "WARNING",
+                "EMERGENCY"
+              ]
+            },
+            "risk_reason": {
+              "enum": [
+                "NONE",
+                "INITIALIZING",
+                "FIRE_DETECTED",
+                "CRITICAL_TEMPERATURE",
+                "HIGH_TEMPERATURE",
+                "RAPID_TEMPERATURE_RISE",
+                "UNATTENDED_COOKING",
+                "GAS_SMOKE_ELEVATED",
+                "SENSOR_FAULT",
+                "SENSOR_STALE",
+                "RECOVERY_PENDING",
+                "EMERGENCY_LATCHED",
+                "EMERGENCY_ACKNOWLEDGED",
+                "NORMAL_SAFE"
+              ]
+            },
+            "monitoring_status": {
+              "enum": [
+                "OK",
+                "DEGRADED",
+                "FAULT"
+              ]
+            },
+            "emergency_latched": {
+              "type": "boolean"
+            },
+            "gy906_quality": {
+              "enum": [
+                "INITIALIZING",
+                "VALID",
+                "INVALID",
+                "STALE"
+              ]
+            },
+            "mq2_quality": {
+              "enum": [
+                "INITIALIZING",
+                "VALID",
+                "INVALID",
+                "STALE"
+              ]
+            },
+            "flame_quality": {
+              "enum": [
+                "INITIALIZING",
+                "VALID",
+                "INVALID",
+                "STALE"
+              ]
+            },
+            "radar_quality": {
+              "enum": [
+                "INITIALIZING",
+                "VALID",
+                "INVALID",
+                "STALE"
+              ]
+            },
+            "temp_object_c": {
+              "type": "number"
+            },
+            "temp_ambient_c": {
+              "type": "number"
+            },
+            "temp_rate_cps": {
+              "type": "number"
+            },
+            "gas_detected": {
+              "type": "boolean"
+            },
+            "flame_detected": {
+              "type": "boolean"
+            },
+            "presence": {
+              "type": "boolean"
+            },
+            "buzzer_mode": {
+              "enum": [
+                "OFF",
+                "CONTINUOUS",
+                "INTERMITTENT",
+                "FAULT_BEEP"
+              ]
+            },
+            "buzzer_output_on": {
+              "type": "boolean"
+            },
+            "muted": {
+              "type": "boolean"
+            },
+            "recovery_remaining_s": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "mute_remaining_s": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "physical_ack_seq": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "overall_quality": {
+              "enum": [
+                "OK",
+                "DEGRADED",
+                "CRITICAL"
+              ]
+            },
+            "radar_source": {
+              "enum": [
+                "UART",
+                "OUT_FALLBACK"
+              ]
+            },
+            "detection_state": {
+              "enum": [
+                "EMERGENCY_PRESENT",
+                "NO_EMERGENCY",
+                "UNKNOWN"
+              ]
+            },
+            "ack_eligible": {
+              "type": "boolean"
+            },
+            "free_heap_bytes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "min_free_heap_bytes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_drop_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "mq2_adc_counts": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4095
+            },
+            "mq2_adc_mv": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "persistence_health": {
+              "type": "integer",
+              "enum": [
+                0,
+                1,
+                2
+              ]
+            },
+            "mq2_ao_valid": {
+              "type": "boolean"
+            },
+            "mq2_ao_mv_valid": {
+              "type": "boolean"
+            },
+            "largest_free_block_bytes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "network_stack_free_bytes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "safety_stack_free_bytes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "safety_step_max_us": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "safety_interval_max_us": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_expiry_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_reject_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_eviction_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_completed_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_retry_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "journal_loss_count": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "schema_version",
+            "record_kind",
+            "boot_id",
+            "record_seq",
+            "replayed",
+            "time_synced",
+            "captured_uptime_ms"
+          ],
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "record_kind": {
+                    "enum": [
+                      "SNAPSHOT",
+                      "BOOT",
+                      "RECONNECT"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "risk_level",
+                  "risk_reason",
+                  "monitoring_status",
+                  "emergency_latched",
+                  "physical_ack_seq",
+                  "ack_eligible",
+                  "detection_state",
+                  "persistence_health",
+                  "buzzer_mode",
+                  "muted",
+                  "gy906_quality",
+                  "mq2_quality",
+                  "flame_quality",
+                  "radar_quality"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "schema_version": {
+              "const": 1
+            },
+            "record_kind": {
+              "const": "TRANSITION"
+            },
+            "event_boot_id": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{32}$"
+            },
+            "event_record_seq": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "event_replayed": {
+              "type": "boolean"
+            },
+            "event_time_synced": {
+              "type": "boolean"
+            },
+            "event_captured_uptime_ms": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_risk_level": {
+              "enum": [
+                "UNKNOWN",
+                "NORMAL",
+                "SUSPICIOUS",
+                "WARNING",
+                "EMERGENCY"
+              ]
+            },
+            "event_risk_reason": {
+              "enum": [
+                "NONE",
+                "INITIALIZING",
+                "FIRE_DETECTED",
+                "CRITICAL_TEMPERATURE",
+                "HIGH_TEMPERATURE",
+                "RAPID_TEMPERATURE_RISE",
+                "UNATTENDED_COOKING",
+                "GAS_SMOKE_ELEVATED",
+                "SENSOR_FAULT",
+                "SENSOR_STALE",
+                "RECOVERY_PENDING",
+                "EMERGENCY_LATCHED",
+                "EMERGENCY_ACKNOWLEDGED",
+                "NORMAL_SAFE"
+              ]
+            },
+            "event_monitoring_status": {
+              "enum": [
+                "OK",
+                "DEGRADED",
+                "FAULT"
+              ]
+            },
+            "event_emergency_latched": {
+              "type": "boolean"
+            },
+            "event_gy906_quality": {
+              "enum": [
+                "INITIALIZING",
+                "VALID",
+                "INVALID",
+                "STALE"
+              ]
+            },
+            "event_mq2_quality": {
+              "enum": [
+                "INITIALIZING",
+                "VALID",
+                "INVALID",
+                "STALE"
+              ]
+            },
+            "event_flame_quality": {
+              "enum": [
+                "INITIALIZING",
+                "VALID",
+                "INVALID",
+                "STALE"
+              ]
+            },
+            "event_radar_quality": {
+              "enum": [
+                "INITIALIZING",
+                "VALID",
+                "INVALID",
+                "STALE"
+              ]
+            },
+            "event_temp_object_c": {
+              "type": "number"
+            },
+            "event_temp_ambient_c": {
+              "type": "number"
+            },
+            "event_temp_rate_cps": {
+              "type": "number"
+            },
+            "event_gas_detected": {
+              "type": "boolean"
+            },
+            "event_flame_detected": {
+              "type": "boolean"
+            },
+            "event_presence": {
+              "type": "boolean"
+            },
+            "event_buzzer_mode": {
+              "enum": [
+                "OFF",
+                "CONTINUOUS",
+                "INTERMITTENT",
+                "FAULT_BEEP"
+              ]
+            },
+            "event_buzzer_output_on": {
+              "type": "boolean"
+            },
+            "event_muted": {
+              "type": "boolean"
+            },
+            "event_recovery_remaining_s": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_mute_remaining_s": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_physical_ack_seq": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_overall_quality": {
+              "enum": [
+                "OK",
+                "DEGRADED",
+                "CRITICAL"
+              ]
+            },
+            "event_radar_source": {
+              "enum": [
+                "UART",
+                "OUT_FALLBACK"
+              ]
+            },
+            "event_detection_state": {
+              "enum": [
+                "EMERGENCY_PRESENT",
+                "NO_EMERGENCY",
+                "UNKNOWN"
+              ]
+            },
+            "event_ack_eligible": {
+              "type": "boolean"
+            },
+            "event_free_heap_bytes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_min_free_heap_bytes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_event_drop_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_mq2_adc_counts": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4095
+            },
+            "event_mq2_adc_mv": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_persistence_health": {
+              "type": "integer",
+              "enum": [
+                0,
+                1,
+                2
+              ]
+            },
+            "event_mq2_ao_valid": {
+              "type": "boolean"
+            },
+            "event_mq2_ao_mv_valid": {
+              "type": "boolean"
+            },
+            "event_largest_free_block_bytes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_network_stack_free_bytes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_safety_stack_free_bytes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_safety_step_max_us": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_safety_interval_max_us": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_event_expiry_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_event_reject_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_event_eviction_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_event_completed_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_event_retry_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "event_journal_loss_count": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "schema_version",
+            "record_kind",
+            "event_boot_id",
+            "event_record_seq",
+            "event_replayed",
+            "event_time_synced",
+            "event_captured_uptime_ms",
+            "event_risk_level",
+            "event_risk_reason",
+            "event_monitoring_status",
+            "event_emergency_latched",
+            "event_physical_ack_seq",
+            "event_ack_eligible",
+            "event_detection_state",
+            "event_persistence_health",
+            "event_buzzer_mode",
+            "event_muted",
+            "event_gy906_quality",
+            "event_mq2_quality",
+            "event_flame_quality",
+            "event_radar_quality"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "type": "object",
+      "required": [
+        "ts",
+        "values"
+      ],
+      "properties": {
+        "ts": {
+          "type": "integer",
+          "minimum": 1600000000000
+        },
+        "values": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/record"
+            },
+            {
+              "anyOf": [
+                {
+                  "required": [
+                    "time_synced"
+                  ],
+                  "properties": {
+                    "time_synced": {
+                      "const": true
+                    }
+                  }
+                },
+                {
+                  "required": [
+                    "event_time_synced"
+                  ],
+                  "properties": {
+                    "event_time_synced": {
+                      "const": true
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "allOf": [
+        {
+          "$ref": "#/$defs/record"
+        },
+        {
+          "anyOf": [
+            {
+              "required": [
+                "time_synced"
+              ],
+              "properties": {
+                "time_synced": {
+                  "const": false
+                }
+              }
+            },
+            {
+              "required": [
+                "event_time_synced"
+              ],
+              "properties": {
+                "event_time_synced": {
+                  "const": false
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

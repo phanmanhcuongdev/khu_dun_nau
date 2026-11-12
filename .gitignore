@@ -1,0 +1,48 @@
+# Local provisioning and secrets
+/private/
+.env
+.env.*
+!.env.example
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+
+# ESP-IDF generated output and downloaded dependencies
+/build/
+/build-*/
+/managed_components/
+/sdkconfig.old
+/dependencies.lock.windows
+*.bin
+*.elf
+*.map
+*.o
+*.a
+
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Local editor, agent, and OS files
+/.vscode/
+/.idea/
+/.agents/
+/.codex/
+/.aws/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Local runtime logs and generated production evidence
+*.log
+/docs/production/evidence/
+/docs/production/*.diff
+/docs/production/*.patch
+/docs/production/*_manifest.json

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "firmware_version",
+    "build_id",
+    "config_id",
+    "hardware_model",
+    "zone_id",
+    "capabilities",
+    "reset_reason"
+  ],
+  "properties": {
+    "firmware_version": {
+      "type": "string"
+    },
+    "build_id": {
+      "type": "string"
+    },
+    "config_id": {
+      "type": "string"
+    },
+    "hardware_model": {
+      "type": "string"
+    },
+    "zone_id": {
+      "type": "string"
+    },
+    "capabilities": {
+      "type": "string"
+    },
+    "reset_reason": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "recommended_inactivity_ms": {
+      "const": 90000
+    }
+  },
+  "additionalProperties": false
+}

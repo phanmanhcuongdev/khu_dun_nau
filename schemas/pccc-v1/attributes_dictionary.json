@@ -1,0 +1,74 @@
+{
+  "firmware_version": {
+    "type": "string",
+    "unit": "none",
+    "source": "generated build configuration / reset cause / fixed device capabilities",
+    "category": "client_attribute",
+    "trigger": "Boot/reconnect, QoS1",
+    "purpose": "Low-change identity/config metadata"
+  },
+  "build_id": {
+    "type": "string",
+    "unit": "none",
+    "source": "generated build configuration / reset cause / fixed device capabilities",
+    "category": "client_attribute",
+    "trigger": "Boot/reconnect, QoS1",
+    "purpose": "Low-change identity/config metadata"
+  },
+  "config_id": {
+    "type": "string",
+    "unit": "none",
+    "source": "generated build configuration / reset cause / fixed device capabilities",
+    "category": "client_attribute",
+    "trigger": "Boot/reconnect, QoS1",
+    "purpose": "Low-change identity/config metadata"
+  },
+  "hardware_model": {
+    "type": "string",
+    "unit": "none",
+    "source": "generated build configuration / reset cause / fixed device capabilities",
+    "category": "client_attribute",
+    "trigger": "Boot/reconnect, QoS1",
+    "purpose": "Low-change identity/config metadata"
+  },
+  "zone_id": {
+    "type": "string",
+    "unit": "none",
+    "source": "generated build configuration / reset cause / fixed device capabilities",
+    "category": "client_attribute",
+    "trigger": "Boot/reconnect, QoS1",
+    "purpose": "Low-change identity/config metadata"
+  },
+  "capabilities": {
+    "type": "string",
+    "unit": "none",
+    "source": "generated build configuration / reset cause / fixed device capabilities",
+    "category": "client_attribute",
+    "trigger": "Boot/reconnect, QoS1",
+    "purpose": "Low-change identity/config metadata"
+  },
+  "reset_reason": {
+    "type": "string",
+    "unit": "none",
+    "source": "generated build configuration / reset cause / fixed device capabilities",
+    "category": "client_attribute",
+    "trigger": "Boot/reconnect, QoS1",
+    "purpose": "Low-change identity/config metadata"
+  },
+  "schema_version": {
+    "type": "integer",
+    "unit": "none",
+    "source": "generated build configuration / reset cause / fixed device capabilities",
+    "category": "client_attribute",
+    "trigger": "Boot/reconnect, QoS1",
+    "purpose": "Low-change identity/config metadata"
+  },
+  "recommended_inactivity_ms": {
+    "type": "integer",
+    "unit": "ms",
+    "source": "generated build configuration / reset cause / fixed device capabilities",
+    "category": "client_attribute",
+    "trigger": "Boot/reconnect, QoS1",
+    "purpose": "Low-change identity/config metadata"
+  }
+}

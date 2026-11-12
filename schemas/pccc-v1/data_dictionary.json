@@ -1,0 +1,622 @@
+{
+  "schema_version": {
+    "type": "enum",
+    "enum": null,
+    "unit": "none",
+    "source": "constant 1",
+    "category": "telemetry",
+    "history_key": "event_schema_version",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Contract parser compatibility"
+  },
+  "boot_id": {
+    "type": "string",
+    "enum": null,
+    "unit": "none",
+    "source": "esp_fill_random(16 bytes) once at boot",
+    "category": "telemetry",
+    "history_key": "event_boot_id",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Boot/session identity"
+  },
+  "record_seq": {
+    "type": "integer",
+    "enum": null,
+    "unit": "none",
+    "source": "publisher monotonic sequence allocated on capture",
+    "category": "telemetry",
+    "history_key": "event_record_seq",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Ordering within boot; gaps are permitted"
+  },
+  "replayed": {
+    "type": "boolean",
+    "enum": null,
+    "unit": "none",
+    "source": "event retry/journal transport metadata",
+    "category": "telemetry",
+    "history_key": "event_replayed",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Historical/retry provenance; not current state"
+  },
+  "time_synced": {
+    "type": "boolean",
+    "enum": null,
+    "unit": "none",
+    "source": "SNTP callback + clock_policy trusted anchor",
+    "category": "telemetry",
+    "history_key": "event_time_synced",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Whether native Unix timestamp is trustworthy"
+  },
+  "captured_uptime_ms": {
+    "type": "integer",
+    "enum": null,
+    "unit": "ms",
+    "source": "risk_state.last_eval_time_us or health capture time",
+    "category": "telemetry",
+    "history_key": "event_captured_uptime_ms",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Monotonic capture age; never Unix time"
+  },
+  "risk_level": {
+    "type": "enum",
+    "enum": [
+      "UNKNOWN",
+      "NORMAL",
+      "SUSPICIOUS",
+      "WARNING",
+      "EMERGENCY"
+    ],
+    "unit": "none",
+    "source": "risk_state.risk_level",
+    "category": "telemetry",
+    "history_key": "event_risk_level",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Authoritative local alarm classification"
+  },
+  "risk_reason": {
+    "type": "enum",
+    "enum": [
+      "NONE",
+      "INITIALIZING",
+      "FIRE_DETECTED",
+      "CRITICAL_TEMPERATURE",
+      "HIGH_TEMPERATURE",
+      "RAPID_TEMPERATURE_RISE",
+      "UNATTENDED_COOKING",
+      "GAS_SMOKE_ELEVATED",
+      "SENSOR_FAULT",
+      "SENSOR_STALE",
+      "RECOVERY_PENDING",
+      "EMERGENCY_LATCHED",
+      "EMERGENCY_ACKNOWLEDGED",
+      "NORMAL_SAFE"
+    ],
+    "unit": "none",
+    "source": "risk_state.risk_reason",
+    "category": "telemetry",
+    "history_key": "event_risk_reason",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Engine-selected primary reason; no second classifier"
+  },
+  "monitoring_status": {
+    "type": "enum",
+    "enum": [
+      "OK",
+      "DEGRADED",
+      "FAULT"
+    ],
+    "unit": "none",
+    "source": "risk_state.monitoring_status",
+    "category": "telemetry",
+    "history_key": "event_monitoring_status",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Startup/warmup/monitoring fault independent of risk"
+  },
+  "emergency_latched": {
+    "type": "boolean",
+    "enum": null,
+    "unit": "none",
+    "source": "risk_state.emergency_latched (WP01)",
+    "category": "telemetry",
+    "history_key": "event_emergency_latched",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Persistent local latch; Cloud cannot clear"
+  },
+  "gy906_quality": {
+    "type": "enum",
+    "enum": [
+      "INITIALIZING",
+      "VALID",
+      "INVALID",
+      "STALE"
+    ],
+    "unit": "none",
+    "source": "gy906_quality + existing freshness window + finite checks",
+    "category": "telemetry",
+    "history_key": "event_gy906_quality",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Current MLX90614 data usability"
+  },
+  "mq2_quality": {
+    "type": "enum",
+    "enum": [
+      "INITIALIZING",
+      "VALID",
+      "INVALID",
+      "STALE"
+    ],
+    "unit": "none",
+    "source": "mq2_quality + existing freshness window",
+    "category": "telemetry",
+    "history_key": "event_mq2_quality",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "DO acquisition usability, not proof of physical connection"
+  },
+  "flame_quality": {
+    "type": "enum",
+    "enum": [
+      "INITIALIZING",
+      "VALID",
+      "INVALID",
+      "STALE"
+    ],
+    "unit": "none",
+    "source": "flame_quality + existing freshness window",
+    "category": "telemetry",
+    "history_key": "event_flame_quality",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "DO acquisition usability, not proof of physical connection"
+  },
+  "radar_quality": {
+    "type": "enum",
+    "enum": [
+      "INITIALIZING",
+      "VALID",
+      "INVALID",
+      "STALE"
+    ],
+    "unit": "none",
+    "source": "radar_quality + existing freshness window",
+    "category": "telemetry",
+    "history_key": "event_radar_quality",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Radar acquisition usability; inspect source separately"
+  },
+  "temp_object_c": {
+    "type": "number",
+    "enum": null,
+    "unit": "degC",
+    "source": "temp_object_filtered",
+    "category": "telemetry",
+    "history_key": "event_temp_object_c",
+    "validity": "Fresh/valid at capture; omitted if invalid/stale/non-finite; history retains original observation",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Filtered MLX90614 object temperature, not room temperature"
+  },
+  "temp_ambient_c": {
+    "type": "number",
+    "enum": null,
+    "unit": "degC",
+    "source": "temp_ambient_filtered",
+    "category": "telemetry",
+    "history_key": "event_temp_ambient_c",
+    "validity": "Fresh/valid at capture; omitted if invalid/stale/non-finite; history retains original observation",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Filtered MLX90614 sensor ambient temperature"
+  },
+  "temp_rate_cps": {
+    "type": "number",
+    "enum": null,
+    "unit": "degC/s",
+    "source": "dT_dt when dT_dt_valid",
+    "category": "telemetry",
+    "history_key": "event_temp_rate_cps",
+    "validity": "Fresh/valid at capture; omitted if invalid/stale/non-finite; history retains original observation",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Existing derived filtered object-temperature slope"
+  },
+  "gas_detected": {
+    "type": "boolean",
+    "enum": null,
+    "unit": "none",
+    "source": "mq2_gas_detected (DO interpreted by existing pipeline)",
+    "category": "telemetry",
+    "history_key": "event_gas_detected",
+    "validity": "Fresh/valid at capture; omitted if invalid/stale/non-finite; history retains original observation",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Digital gas/smoke indication; not concentration"
+  },
+  "flame_detected": {
+    "type": "boolean",
+    "enum": null,
+    "unit": "none",
+    "source": "flame_state == FLAME_STATE_FIRE",
+    "category": "telemetry",
+    "history_key": "event_flame_detected",
+    "validity": "Fresh/valid at capture; omitted if invalid/stale/non-finite; history retains original observation",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Existing DO flame indication"
+  },
+  "presence": {
+    "type": "boolean",
+    "enum": null,
+    "unit": "none",
+    "source": "radar_presence",
+    "category": "telemetry",
+    "history_key": "event_presence",
+    "validity": "Fresh/valid at capture; omitted if invalid/stale/non-finite; history retains original observation",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Existing presence flag; no new detection logic"
+  },
+  "buzzer_mode": {
+    "type": "enum",
+    "enum": [
+      "OFF",
+      "CONTINUOUS",
+      "INTERMITTENT",
+      "FAULT_BEEP"
+    ],
+    "unit": "none",
+    "source": "buzzer_get_mode() after Local Alarm Controller",
+    "category": "telemetry",
+    "history_key": "event_buzzer_mode",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Commanded driver mode"
+  },
+  "buzzer_output_on": {
+    "type": "boolean",
+    "enum": null,
+    "unit": "none",
+    "source": "buzzer_state captured by Local Alarm Controller",
+    "category": "telemetry",
+    "history_key": "event_buzzer_output_on",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Output phase sample; not proof of audible operation"
+  },
+  "muted": {
+    "type": "boolean",
+    "enum": null,
+    "unit": "none",
+    "source": "is_muted from Local Alarm Controller",
+    "category": "telemetry",
+    "history_key": "event_muted",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Local WARNING mute state"
+  },
+  "recovery_remaining_s": {
+    "type": "integer",
+    "enum": null,
+    "unit": "s",
+    "source": "risk_state.recovery_countdown_sec",
+    "category": "telemetry",
+    "history_key": "event_recovery_remaining_s",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Existing continuous-safe recovery countdown"
+  },
+  "mute_remaining_s": {
+    "type": "integer",
+    "enum": null,
+    "unit": "s",
+    "source": "mute_remaining_sec",
+    "category": "telemetry",
+    "history_key": "event_mute_remaining_s",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Local mute countdown"
+  },
+  "physical_ack_seq": {
+    "type": "integer",
+    "enum": null,
+    "unit": "none",
+    "source": "risk_state.physical_ack_seq (WP01)",
+    "category": "telemetry",
+    "history_key": "event_physical_ack_seq",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Increases only for accepted durable physical latch clear"
+  },
+  "overall_quality": {
+    "type": "enum",
+    "enum": [
+      "OK",
+      "DEGRADED",
+      "CRITICAL"
+    ],
+    "unit": "none",
+    "source": "kitchen_sensor_data_t.v1_quality",
+    "category": "telemetry",
+    "history_key": "event_overall_quality",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Pipeline overall quality, separate from risk"
+  },
+  "radar_source": {
+    "type": "enum",
+    "enum": [
+      "UART",
+      "OUT_FALLBACK"
+    ],
+    "unit": "none",
+    "source": "radar_uart_valid ? UART : OUT_FALLBACK",
+    "category": "telemetry",
+    "history_key": "event_radar_source",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Distinguish validated UART frame from digital fallback"
+  },
+  "detection_state": {
+    "type": "enum",
+    "enum": [
+      "EMERGENCY_PRESENT",
+      "NO_EMERGENCY",
+      "UNKNOWN"
+    ],
+    "unit": "none",
+    "source": "risk_state.detection_state (WP01)",
+    "category": "telemetry",
+    "history_key": "event_detection_state",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Present emergency evidence independent of latched alarm"
+  },
+  "ack_eligible": {
+    "type": "boolean",
+    "enum": null,
+    "unit": "none",
+    "source": "risk_state.ack_eligible (WP01)",
+    "category": "telemetry",
+    "history_key": "event_ack_eligible",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Physical ACK readiness; not a remote command"
+  },
+  "free_heap_bytes": {
+    "type": "integer",
+    "enum": null,
+    "unit": "byte",
+    "source": "esp_get_free_heap_size()",
+    "category": "telemetry",
+    "history_key": "event_free_heap_bytes",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "60s health; idle heartbeat 30s",
+    "purpose": "Current total free heap"
+  },
+  "min_free_heap_bytes": {
+    "type": "integer",
+    "enum": null,
+    "unit": "byte",
+    "source": "esp_get_minimum_free_heap_size()",
+    "category": "telemetry",
+    "history_key": "event_min_free_heap_bytes",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "60s health; idle heartbeat 30s",
+    "purpose": "Boot low-water mark"
+  },
+  "event_drop_count": {
+    "type": "integer",
+    "enum": null,
+    "unit": "none",
+    "source": "event rejected + evicted + journal loss counters",
+    "category": "telemetry",
+    "history_key": "event_event_drop_count",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "60s health; idle heartbeat 30s",
+    "purpose": "Aggregate exposure indicator; may overlap, not unique lost events"
+  },
+  "mq2_adc_counts": {
+    "type": "integer",
+    "enum": null,
+    "unit": "ADC counts",
+    "source": "mq2_ao_adc_raw (actual AO read, 0..4095)",
+    "category": "telemetry",
+    "history_key": "event_mq2_adc_counts",
+    "validity": "Fresh/valid at capture; omitted if invalid/stale/non-finite; history retains original observation",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Actual ADC counts at MCU pin; not pseudo-raw or ppm"
+  },
+  "mq2_adc_mv": {
+    "type": "integer",
+    "enum": null,
+    "unit": "mV at ADC pin",
+    "source": "mq2_ao_adc_mv when calibrated",
+    "category": "telemetry",
+    "history_key": "event_mq2_adc_mv",
+    "validity": "Fresh/valid at capture; omitted if invalid/stale/non-finite; history retains original observation",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "ADC pin millivolts, not reconstructed sensor supply voltage"
+  },
+  "persistence_health": {
+    "type": "integer",
+    "enum": [
+      0,
+      1,
+      2
+    ],
+    "unit": "none",
+    "source": "risk_state.persistence_health / latch_store_health_t",
+    "category": "telemetry",
+    "history_key": "event_persistence_health",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "0 pending, 1 durable, 2 fault/unavailable; not event-journal health"
+  },
+  "mq2_ao_valid": {
+    "type": "boolean",
+    "enum": null,
+    "unit": "none",
+    "source": "mq2_ao_valid + own last-update freshness",
+    "category": "telemetry",
+    "history_key": "event_mq2_ao_valid",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Independent actual AO conversion validity"
+  },
+  "mq2_ao_mv_valid": {
+    "type": "boolean",
+    "enum": null,
+    "unit": "none",
+    "source": "mq2_ao_mv_valid + AO validity/freshness",
+    "category": "telemetry",
+    "history_key": "event_mq2_ao_mv_valid",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "Immediate transition; current snapshot 10s normal / 2s abnormal",
+    "purpose": "Independent calibration validity"
+  },
+  "largest_free_block_bytes": {
+    "type": "integer",
+    "enum": null,
+    "unit": "byte",
+    "source": "heap_caps_get_largest_free_block(MALLOC_CAP_8BIT)",
+    "category": "telemetry",
+    "history_key": "event_largest_free_block_bytes",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "60s health; idle heartbeat 30s",
+    "purpose": "Allocation headroom/fragmentation indicator"
+  },
+  "network_stack_free_bytes": {
+    "type": "integer",
+    "enum": null,
+    "unit": "byte",
+    "source": "uxTaskGetStackHighWaterMark(network task)",
+    "category": "telemetry",
+    "history_key": "event_network_stack_free_bytes",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "60s health; idle heartbeat 30s",
+    "purpose": "ESP-IDF stack minimum unused bytes"
+  },
+  "safety_stack_free_bytes": {
+    "type": "integer",
+    "enum": null,
+    "unit": "byte",
+    "source": "uxTaskGetStackHighWaterMark(main task)",
+    "category": "telemetry",
+    "history_key": "event_safety_stack_free_bytes",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "60s health; idle heartbeat 30s",
+    "purpose": "ESP-IDF stack minimum unused bytes"
+  },
+  "safety_step_max_us": {
+    "type": "integer",
+    "enum": null,
+    "unit": "us",
+    "source": "main: loop start through local alarm controller",
+    "category": "telemetry",
+    "history_key": "event_safety_step_max_us",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "60s health; idle heartbeat 30s",
+    "purpose": "Observed maximum in this boot, not sensor-to-alarm worst-case"
+  },
+  "safety_interval_max_us": {
+    "type": "integer",
+    "enum": null,
+    "unit": "us",
+    "source": "main: successive safety iteration start times",
+    "category": "telemetry",
+    "history_key": "event_safety_interval_max_us",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "60s health; idle heartbeat 30s",
+    "purpose": "Observed sample-loop interval maximum"
+  },
+  "event_expiry_count": {
+    "type": "integer",
+    "enum": null,
+    "unit": "none",
+    "source": "event_buffer_stats.expired",
+    "category": "telemetry",
+    "history_key": "event_event_expiry_count",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "60s health; idle heartbeat 30s",
+    "purpose": "Expired/recycled delivery attempts; retained record is retried"
+  },
+  "event_reject_count": {
+    "type": "integer",
+    "enum": null,
+    "unit": "none",
+    "source": "event_buffer_stats.rejected",
+    "category": "telemetry",
+    "history_key": "event_event_reject_count",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "60s health; idle heartbeat 30s",
+    "purpose": "Full-buffer enqueue rejections; includes repeated handoff attempts"
+  },
+  "event_eviction_count": {
+    "type": "integer",
+    "enum": null,
+    "unit": "none",
+    "source": "event_buffer_stats.evicted",
+    "category": "telemetry",
+    "history_key": "event_event_eviction_count",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "60s health; idle heartbeat 30s",
+    "purpose": "Unclaimed lower-priority RAM records replaced"
+  },
+  "event_completed_count": {
+    "type": "integer",
+    "enum": null,
+    "unit": "none",
+    "source": "event_buffer_stats.completed",
+    "category": "telemetry",
+    "history_key": "event_event_completed_count",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "60s health; idle heartbeat 30s",
+    "purpose": "RAM records removed after matching broker PUBACK"
+  },
+  "event_retry_count": {
+    "type": "integer",
+    "enum": null,
+    "unit": "none",
+    "source": "event_buffer_stats.retries",
+    "category": "telemetry",
+    "history_key": "event_event_retry_count",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "60s health; idle heartbeat 30s",
+    "purpose": "Retry attempts, not distinct incidents"
+  },
+  "journal_loss_count": {
+    "type": "integer",
+    "enum": null,
+    "unit": "none",
+    "source": "critical_journal_losses()",
+    "category": "telemetry",
+    "history_key": "event_journal_loss_count",
+    "validity": "Snapshot/export, not proof of physical sensor or actuator health",
+    "trigger": "60s health; idle heartbeat 30s",
+    "purpose": "Failed/unavailable/full/corrupt durable copies; uncertainty, not exact Cloud loss"
+  },
+  "record_kind": {
+    "type": "enum",
+    "enum": [
+      "SNAPSHOT",
+      "BOOT",
+      "RECONNECT",
+      "HEARTBEAT",
+      "TRANSITION"
+    ],
+    "unit": "none",
+    "source": "publisher stream selector",
+    "category": "telemetry",
+    "validity": "Always present",
+    "trigger": "Every record",
+    "purpose": "Separate current, health and archive streams"
+  }
+}

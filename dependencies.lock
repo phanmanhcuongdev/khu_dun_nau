@@ -1,0 +1,41 @@
+dependencies:
+  espressif/cjson:
+    component_hash: e788323270d90738662d66fffa910bfe1fba019bba087f01557e70c40485b469
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=5.0'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 1.7.19~2
+  espressif/mqtt:
+    component_hash: fb18bc3b65aa8c94693a9811ffc322cca8a65d92d5ec84983d3e385080e3969c
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=5.3'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 1.1.0
+  idf:
+    source:
+      type: idf
+    version: 6.1.0
+  nopnop2002/ssd1306:
+    component_hash: ccf568f8a780207aa7fdafda106f6e934de43a6f1c9ae783dd2825be2c525f28
+    dependencies: []
+    source:
+      git: https://github.com/nopnop2002/esp-idf-ssd1306.git
+      path: components/ssd1306
+      type: git
+    version: fbf73ef39d37787c9c33564c49d025b7c8c7fc83
+direct_dependencies:
+- espressif/cjson
+- espressif/mqtt
+- idf
+- nopnop2002/ssd1306
+manifest_hash: 4d75457c6083dc619459299da5ee211643f233fa5daca8b5fe44dcc932d530da
+target: esp32s3
+version: 3.0.0
